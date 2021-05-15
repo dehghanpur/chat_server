@@ -1,0 +1,19 @@
+{
+  "name": "chat_server",
+  "version": "1.0.0",
+  "description": "the server of chat with node js",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dehghanpur/chat_server.git"
+  },
+  "author": "Mohammad Dehghanpour",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dehghanpur/chat_server/issues"
+  },
+  "homepage": "https://github.com/dehghanpur/chat_server#readme"
+}
