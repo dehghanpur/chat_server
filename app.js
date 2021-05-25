@@ -11,7 +11,11 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 
 
+const router = require('./routes/route.js');
+
 const app = express();
+
+
 app.use(bodyParser.json()); // application/json
 app.use(cors());
 
@@ -20,23 +24,12 @@ app.use(hpp());
 app.use(helmet());
 app.use(xss());
 app.use(mongoSanitize());
-
-const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 400 // limit each IP to 100 requests per windowMs
-});
-app.use(limiter);
-const limiterComment = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 6 // limit each IP to 100 requests per windowMs
-});
-
-app.use('/api/comment', limiterComment);
 //security
 
 
-// app.use('/api',site);
 
+
+app.use('/api',router);
 //error handler
 app.use((error, req, res, next) => {
     const status = error.statusCode || 500;
