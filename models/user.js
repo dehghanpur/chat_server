@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Community = new Schema({
+const User = new Schema({
     name: {
-        unique: true,
         type: String,
         required: true,
     },
@@ -12,4 +11,4 @@ const Community = new Schema({
         required: false,
     }]
 });
-module.exports = mongoose.model('Community', Community);
+module.exports = mongoose.model('User', User);
