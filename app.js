@@ -10,7 +10,7 @@ const helmet = require('helmet');
 const xss = require("xss-clean");
 const hpp = require("hpp");
 
-
+const io = require('./socket');
 const route = require('./routes/route.js');
 
 const app = express();
@@ -27,9 +27,7 @@ app.use(mongoSanitize());
 //security
 
 
-
-
-app.use('/api',route);
+app.use('/api', route);
 //error handler
 app.use((error, req, res, next) => {
     const status = error.statusCode || 500;
@@ -43,6 +41,7 @@ mongoose
         process.env.DB
     )
     .then(result => {
+        io.init(app);
         app.listen(8080);
     })
     .catch(err => console.log(err));
