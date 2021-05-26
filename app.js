@@ -11,7 +11,7 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 
 
-const router = require('./routes/route.js');
+const route = require('./routes/route.js');
 
 const app = express();
 
@@ -29,7 +29,7 @@ app.use(mongoSanitize());
 
 
 
-app.use('/api',router);
+app.use('/api',route);
 //error handler
 app.use((error, req, res, next) => {
     const status = error.statusCode || 500;
