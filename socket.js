@@ -21,10 +21,10 @@ module.exports = {
         }
         io.on('connection', async (socket) => {
             socket.on('disconnect', async () => {
-                await socketController.sendMessage(io, socket, 'has left the community');
+                await socketController.disconnect(io, socket);
             });
             socket.on('setRoom', async (data) => {
-                await socketController.allocateRoom(socket, data);
+                await socketController.allocateRoom(io, socket, data);
             });
             socket.on('sendMessage', async (newMessage) => {
                 await socketController.sendMessage(io, socket, newMessage);
