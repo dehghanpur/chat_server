@@ -25,6 +25,7 @@ module.exports = {
                 console.log('disconnect')
             })
             await socketController.allocateRoom(socket);
+            await socketController.sendMessage(io,socket);
 
         })
 
