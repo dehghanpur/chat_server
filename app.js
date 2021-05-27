@@ -1,5 +1,5 @@
 const path = require('path');
-require('dotenv').config()
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -11,6 +11,7 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 
 const io = require('./socket');
+const redis = require('./redis');
 const route = require('./routes/route.js');
 
 const app = express();
@@ -41,7 +42,9 @@ mongoose
         process.env.DB
     )
     .then(result => {
-        io.init(app);
-        app.listen(8080);
+        const server = app.listen(8080);
+        redis.init();
+        io.init(server);
+        io.setSocket();
     })
     .catch(err => console.log(err));
