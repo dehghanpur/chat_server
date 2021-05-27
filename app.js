@@ -11,7 +11,6 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 
 const io = require('./socket');
-const redis = require('./redis');
 const route = require('./routes/route.js');
 
 const app = express();
@@ -43,7 +42,6 @@ mongoose
     )
     .then(result => {
         const server = app.listen(8080);
-        redis.init();
         io.init(server);
         io.setSocket();
     })
