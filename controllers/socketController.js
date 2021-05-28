@@ -8,7 +8,7 @@ sendMessage = async (io, socket, newMessage) => {
     const user = await User.findById(socket.userId);
     const community = await Community.findOne({name: socket.room});
     moment.locale('fa');
-    const time = moment().format('HH:mm');
+    const time = moment().add(4, 'h').add(30, 'm').format('HH:mm');
     const message = await new Message({
         user: user._id,
         community: community._id,
