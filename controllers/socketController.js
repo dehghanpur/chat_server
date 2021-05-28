@@ -51,8 +51,13 @@ exports.allocateRoom = async (io, socket, {room, userId, name}) => {
     //         redis.rpush('onlineList:' + socket.room, userId).then(r => {
     //         });
     //     }
-    const onlineNames = await fetchOnlinePerson(socket);
-
+    let community = await Community.findOne({name: room});
+    const user = await User.findById(userId);
+    community.onlinePerson.push(user);
+    await community.save();
+    // const onlineNames = await fetchOnlinePerson(socket);
+    community = await Community.findOne({name: socket.room}).populate('onlinePerson');
+    const onlineNames = community.onlinePerson;
     io.to(socket.room).emit('online', onlineNames);
     //
     // });
@@ -60,6 +65,12 @@ exports.allocateRoom = async (io, socket, {room, userId, name}) => {
 disconnect = async (io, socket) => {
 
     await sendMessage(io, socket, 'has left the community');
+    let community = await Community.findOne({name: socket.room});
+    const user = await User.findById(socket.userId);
+    community.onlinePerson = await community.onlinePerson.filter(p => {
+        return p != socket.userId;
+    });
+    await community.save();
     // await redis.llen('onlineList:' + socket.room).then(async len => {
     //     for (let i = 0; i < len + 1; i++) {
     //
@@ -76,7 +87,8 @@ disconnect = async (io, socket) => {
     //         })
     //     }
     // });
-    const onlineNames = await fetchOnlinePerson(socket);
+    community = await Community.findOne({name: socket.room}).populate('onlinePerson');
+    const onlineNames = community.onlinePerson;
     io.to(socket.room).emit('online', onlineNames);
 
 };
