@@ -7,11 +7,13 @@ const moment = require('moment');
 sendMessage = async (io, socket, newMessage) => {
     const user = await User.findById(socket.userId);
     const community = await Community.findOne({name: socket.room});
+    moment.locale('fa');
+    const time = moment().format('HH:mm');
     const message = await new Message({
         user: user._id,
         community: community._id,
         content: newMessage,
-        date: moment().format('h:m A')
+        date: time
     });
     await message.save();
     user.messages.push(message);
