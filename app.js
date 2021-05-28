@@ -15,6 +15,11 @@ const route = require('./routes/route.js');
 
 const app = express();
 
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 8000;
+}
+
 
 app.use(bodyParser.json()); // application/json
 app.use(cors());
@@ -41,7 +46,7 @@ mongoose
         process.env.DB
     )
     .then(result => {
-        const server = app.listen(8080);
+        const server = app.listen(port);
         io.init(server);
         io.setSocket();
     })
