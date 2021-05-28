@@ -16,7 +16,6 @@ const route = require('./routes/route.js');
 const app = express();
 
 const port = process.env.PORT || 8080;
-const MONGODB_URI = process.env.MONGODB_URL ||process.env.DB
 
 
 app.use(bodyParser.json()); // application/json
@@ -41,7 +40,7 @@ app.use((error, req, res, next) => {
 //database
 mongoose
     .connect(
-        MONGODB_URI
+        process.env.DB
     )
     .then(result => {
         const server = app.listen(port);

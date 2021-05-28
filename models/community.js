@@ -10,6 +10,11 @@ const Community = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Message',
         required: false,
+    }],
+    onlinePerson: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: false,
     }]
 });
 module.exports = mongoose.model('Community', Community);
